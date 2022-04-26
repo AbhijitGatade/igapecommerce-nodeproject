@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.post("/save", async (req, res) => {
   let body = req.body;
-  console.log(body);
   let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
   businessproductvariety.id = body.data.id;
   businessproductvariety.productid = body.data.productid;

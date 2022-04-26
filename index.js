@@ -36,6 +36,7 @@ app.use("/igap/business", require("./routes/igap/business"));
 app.use("/igap/productcategory", require("./routes/igap/igapproductcategory"));
 app.use("/igap/vendor", require("./routes/igap/igapvendor"));
 app.use("/igap/vendorproduct", require("./routes/igap/igapvendorproduct"));
+app.use("/igap/vendorproductpicture" , require("./routes/igap/igapvenderproductpicture"));
 app.use("/igap/vendorproductvariety", require("./routes/igap/igapvendorproductvariety"));
 // IGAP APIs routing for End
 
@@ -45,6 +46,8 @@ app.use("/business/productcategory", require("./routes/business/businessproductc
 app.use("/business/product", require("./routes/business/businessproduct"));
 app.use("/business/productpicture" , require("./routes/business/businessproductpicture"));
 app.use("/business/productvariety", require("./routes/business/businessproductvariety"));
+app.use("/business/productreview", require("./routes/business/businessproductreview"));
+app.use("/business/coupon",require("./routes/business/businesscoupon"));
 // Business APIs routing for End
 
 app.listen(8081, function() {

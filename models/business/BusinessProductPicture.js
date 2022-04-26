@@ -74,11 +74,11 @@ class BusinessProductPicture {
         });           
     }
     delete=()=>{
-        this.query = "SELECT * FROM business_productpicture WHERE id = " + this.id;
+        this.query = "SELECT * FROM business_productpictures WHERE id = " + this.id;
         return new Promise((resolve, reject) => {
             this.db.query(this.query, (err, result) => {
             this.picpath = result[0].picpath;
-            this.query = "DELETE FROM business_productpicture WHERE id = " + this.id;        
+            this.query = "DELETE FROM business_productpictures WHERE id = " + this.id;        
               this.db.query(this.query, (err, result) => {
                 if (err) {
                   this.db.close();        

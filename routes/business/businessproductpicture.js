@@ -1,5 +1,5 @@
 var express = require("express");
-var BusinessProductPictureProductPicture = require("../../models/businessproductpicture/BusinessProductPictureProductPicture");
+var BusinessProductPicture = require("../../models/business/BusinessProductPicture");
 const router = express.Router();
 
 router.post("/save", async (req, res) => {
@@ -33,8 +33,9 @@ router.post("/save", async (req, res) => {
 });
 
 router.post("/list", async (req, res) => {
-  let body = req.body;
+  let body = req.body;  
   let businessproductpicture = new BusinessProductPicture.BusinessProductPicture();
+  businessproductpicture.productid = body.data.productid;
 
   businessproductpicture.list().then(
     (result) => {

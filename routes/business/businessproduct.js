@@ -19,6 +19,7 @@ router.post("/save", async (req, res) => {
     businessproduct.specification = body.data.specification;
     businessproduct.mrp = body.data.mrp;
     businessproduct.price = body.data.price;
+    businessproduct.weight = body.data.weight;
     businessproduct.imagecode = body.data.imagecode;
     businessproduct.instock = body.data.instock;
     businessproduct.save().then(
@@ -118,6 +119,35 @@ router.post("/save", async (req, res) => {
         );
       });
     
+      router.post("/updateaffiliatepercent", async (req, res) => {
+        let body = req.body;
+        let businessproduct = new BusinessProduct.BusinessProduct();
+        businessproduct.id = body.data.id;
+        businessproduct.affiliatepercent = body.data.affiliatepercent;
+        businessproduct.updateaffiliatepercent().then(
+          (result) => {
+            let data = {
+              data: {
+                status: "success",
+                data: result,
+              },
+            };
+            res.end(JSON.stringify(data));
+          },
+          (err) => {
+            let data = {
+              data: {
+                status: "fail",
+              },
+            };
+            res.end(JSON.stringify(data));
+          }
+        );
+      });
+    
+
+      
+
     router.post("/get", async (req, res) => {
       let body = req.body;
       let businessproduct = new BusinessProduct.BusinessProduct();

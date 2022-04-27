@@ -26,12 +26,12 @@ class BusinessProductReview {
     save = ()=>{
         if(this.id == 0)
         {
-            this.query = "INSERT INTO businessproductreviews(productid, userid, rating, review, createdon, status )";
-            this.query += "VALUES (" + this.productid + ", " + this.userid + ", " + this.rating + ", '" + this.review + "', CURDATE(), 'close')";
+            this.query = "INSERT INTO business_productreviews(productid, userid, rating, review, createdon, status) ";
+            this.query += "VALUES(" + this.productid + ", " + this.userid + ", " + this.rating + ", '" + this.review + "', CURDATE(), 'close')";
         }
         else
         {
-            this.query = "UPDATE businessproductreviews SET rating = " + this.rating +", ";
+            this.query = "UPDATE business_productreviews SET rating = " + this.rating +", ";
             this.query += "review = '" + this.review + "' ";
             this.query += "WHERE id = " + this.id;
         }
@@ -47,7 +47,7 @@ class BusinessProductReview {
     }
 
     get = () =>{
-        this.query = "SELECT * FROM businessproductreviews WHERE id = " + this.id;
+        this.query = "SELECT * FROM business_productreviews WHERE id = " + this.id;
         return new Promise((resolve, rejects)=> {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();
@@ -60,7 +60,7 @@ class BusinessProductReview {
     }
 
     list = () =>{
-        this.query = "SELECT * FROM businessproductreviews WHERE productid = " + this.productid + " ORDER BY createdon";
+        this.query = "SELECT * FROM business_productreviews WHERE productid = " + this.productid + " ORDER BY createdon";
         return new Promise((resolve, rejects)=> {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();
@@ -73,7 +73,7 @@ class BusinessProductReview {
     }
     
     delete = ()=>{
-        this.query = "DELETE FROM businessproductreviews WHERE id =" + this.id;
+        this.query = "DELETE FROM business_productreviews WHERE id =" + this.id;
         return new Promise((resolve, rejects)=> {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();
@@ -86,7 +86,7 @@ class BusinessProductReview {
     }
 
     changestatus = ()=>{
-        this.query = "UPDATE businessproductreviews SET status='" + this.status + "' WHERE id = " + this.id;
+        this.query = "UPDATE business_productreviews SET status='" + this.status + "' WHERE id = " + this.id;
         return new Promise((resolve, rejects)=> {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();

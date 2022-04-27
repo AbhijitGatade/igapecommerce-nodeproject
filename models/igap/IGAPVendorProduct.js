@@ -13,6 +13,7 @@ class IGAPVendorProduct {
   igapvendorid = 0;
   mrp = 0;
   price = 0;
+  weight = 0;
   instock = "";
   status = "";
   igaproductcategoryid = 0;
@@ -31,6 +32,7 @@ class IGAPVendorProduct {
     this.imagecode = "";
     this.mrp = 0;
     this.price = 0;
+    this.weight = 0;
     this.instock = "";
     this.status = "";    
   }
@@ -46,9 +48,9 @@ class IGAPVendorProduct {
     }
 
     if (this.id == 0) {
-        this.query = "INSERT INTO igap_vendorproducts(igapvendorid, igaproductcategoryid, name, title, description, specification, picpath, mrp, price, instock, status) ";
+        this.query = "INSERT INTO igap_vendorproducts(igapvendorid, igaproductcategoryid, name, title, description, specification, picpath, mrp, price, weight, instock, status) ";
         this.query += "VALUES(" + this.igapvendorid + ", " + this.igaproductcategoryid + ", '" + this.name + "', '" + this.title + "', ";
-        this.query += "'" + this.description + "', '" + this.specification + "', '" + this.picpath + "', " + this.mrp + ", " + this.price + ", '" + this.instock + "', 'open')";
+        this.query += "'" + this.description + "', '" + this.specification + "', '" + this.picpath + "', " + this.mrp + ", " + this.price + ", " + this.weight + ", '" + this.instock + "', 'open')";
     } 
     else {
       this.query = "UPDATE igap_vendorproducts SET igapvendorid = " + this.igapvendorid + ", ";
@@ -61,6 +63,7 @@ class IGAPVendorProduct {
           this.query += "picpath = '" + this.picpath + "', ";
       this.query += "mrp = " + this.mrp + ", ";
       this.query += "price = " + this.price + ", ";
+      this.query += "weight = " + this.weight + ", ";
       this.query += "instock = '" + this.instock + "' ";
       this.query += " WHERE id =" + this.id;
     }

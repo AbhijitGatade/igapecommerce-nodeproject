@@ -13,8 +13,9 @@ class BusinessProduct {
   specification = "";
   mrp = 0;
   price = 0;
-  imagecode = "";
+  imagecode = "";  
   instock = "";
+  affiliatepercent = 0;
   status = "";
   picpath = "";
 
@@ -30,11 +31,13 @@ class BusinessProduct {
     this.title = "";
     this.description = "";
     this.specification = "";
-    this.mrp = "";
-    this.price = "";
+    this.mrp = 0;
+    this.price = 0;
+    this.weight = 0;
     this.picpath = "";
     this.imagecode = "";
     this.instock = "";
+    this.affiliatepercent = 0;
     this.status = "";
   }
 
@@ -49,10 +52,10 @@ class BusinessProduct {
   }
 
     if (this.id == 0) {
-      this.query = "INSERT INTO business_products(businessid, igapvendorid, businessvendorid, businessproductcategoryid, name, title, description, specification, mrp, price, instock, picpath, status) ";
+      this.query = "INSERT INTO business_products(businessid, igapvendorid, businessvendorid, businessproductcategoryid, name, title, description, specification, mrp, price, weight, instock, affiliatepercent, picpath, status) ";
       this.query += "VALUES (" + this.businessid + ", " + this.igapvendorid + ", " + this.businessvendorid + ", ";
       this.query += this.businessproductcategoryid + " , '" + this.name + "', '" + this.title + "', '" + this.description +"', ";
-      this.query += "'" +this.specification +  "', " + this.mrp + ", " + this.price + ", '" + this.instock + "', '" + this.picpath + "', 'open')";
+      this.query += "'" +this.specification +  "', " + this.mrp + ", " + this.price + ", " + this.weight + ", '" + this.instock + "', 0, '" + this.picpath + "', 'open')";
     } 
     else {
       this.query = "UPDATE business_products SET businessid = " + this.businessid + ", ";
@@ -65,8 +68,9 @@ class BusinessProduct {
       this.query += "specification = '" + this.specification + "', ";
       this.query += "mrp = " + this.mrp + ", ";
       if(this.picpath != "")
-         this.query += "picpath = " + this.picpath + ", ";
+         this.query += "picpath = '" + this.picpath + "', ";
       this.query += "price = " + this.price + ", ";
+      this.query += "weight = " + this.weight + ", ";
       this.query += "instock = '" + this.instock + "' ";
       this.query += "WHERE id =" + this.id;
     }
@@ -132,6 +136,18 @@ class BusinessProduct {
         resolve(result);
       });
     });
+  };
+
+  updateaffiliatepercent=()=>{    
+      this.query = "UPDATE business_products SET affiliatepercent = " + this.affiliatepercent + " ";
+      this.query += "WHERE id = " + this.id;
+      return new Promise((resolve, reject) => {
+        this.db.query(this.query, (err, result) => {
+          this.db.close();
+          if (err) reject(err);
+          resolve(result);
+        });
+      });    
   };
 }
 

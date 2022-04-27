@@ -48,7 +48,17 @@ app.use("/business/productpicture" , require("./routes/business/businessproductp
 app.use("/business/productvariety", require("./routes/business/businessproductvariety"));
 app.use("/business/productreview", require("./routes/business/businessproductreview"));
 app.use("/business/coupon",require("./routes/business/businesscoupon"));
+app.use("/business/affiliate" , require("./routes/business/businessaffiliate"));
+app.use("/business/blogcategory", require("./routes/business/businessblogcategory"));
+app.use("/business/blog", require("./routes/business/businessblog"));
+app.use("/business/subscription", require("./routes/business/businesssubscription"));
+app.use("/business/ad", require("./routes/business/businessad"));
+app.use("/business/banner", require("./routes/business/businessbanner"));
 // Business APIs routing for End
+
+//User APIS routing start
+app.use("/user" , require("./routes/user/user"));
+app.use("/user/address" , require("./routes/user/useraddress"));
 
 app.listen(8081, function() {
     console.log("website is  started");

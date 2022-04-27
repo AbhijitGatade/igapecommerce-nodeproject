@@ -18,6 +18,7 @@ const router = express.Router();
     igapvendorproduct.mrp = body.data.mrp;
     igapvendorproduct.imagecode = body.data.imagecode;
     igapvendorproduct.price = body.data.price;
+    igapvendorproduct.weight = body.data.weight;
     igapvendorproduct.instock = body.data.instock;
     igapvendorproduct.save().then(
         (result) => {

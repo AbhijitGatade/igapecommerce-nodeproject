@@ -1,5 +1,6 @@
 var express = require("express");
 var body_parser = require("body-parser");
+const jwt = require("jsonwebtoken");
 
 var app = express();
 
@@ -16,11 +17,70 @@ app.use((req, res, next) => {
         res.header("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, DELETE");
         return res.status(200).json({});
     }
+    // if(!req.headers.authorization){
+    //     let data = {
+    //         data: {
+    //             status: "exit",
+    //             message:"autherization error"
+    //         },
+    //     };
+    //     res.end(JSON.stringify(data));
+    // }
+    // else if(req.body.data == undefined)
+    // {
+    //     let data = {
+    //         data: {
+    //             status: "exit",
+    //             message:"body data error"
+    //         },
+    //     };
+    //     res.end(JSON.stringify(data));
+    // }
+    // else if(req.path.includes("/gettoken"))
+    // {
+    //     next();
+    // }
+    // else{
+    //     try{
+    //         const authHeader = req.headers.authorization;
+    //         const token =  authHeader.split(' ')[1];
+    //         console.log(token);
+    //         const decoded = jwt.verify(token, 'SECRETKEY');
+    //         console.log(decoded);
+    //         next();
+    //     }catch (err){
+    //         let data = {
+    //             data: {
+    //                 status: "exit",
+    //                 message:"authentication error"
+    //             },
+    //         };
+    //         res.end(JSON.stringify(data));
+    //     }
+    // }
+
     next();
 });
+
 app.get("/",function(req,res){
     res.send("Welcome to iGAP-Ecommerce Store APIs")
     res.end();
+});
+
+app.post("/gettoken", (req, res)=>{
+    let body = req.body;
+    const token = jwt.sign({
+        token: body.data.token,
+        userid: 1,
+    }, 'SECRETKEY',
+    { expiresIn: "365d" });
+    let data = {
+        data: {
+            status: "success",
+            token: token,
+        },
+    };
+    res.end(JSON.stringify(data));
 });
 
 // Shared APIs routing for Beginning
@@ -31,6 +91,7 @@ app.use("/shared/city", require("./routes/shared/city"));
 // Shared APIs routing for End
 
 // IGAP APIs routing for Beginning
+app.use("/igap/authentication", require("./routes/igap/authentication"))
 app.use("/igap/admin", require("./routes/igap/admin"))
 app.use("/igap/business", require("./routes/igap/business"));
 app.use("/igap/productcategory", require("./routes/igap/igapproductcategory"));
@@ -41,7 +102,6 @@ app.use("/igap/vendorproductvariety", require("./routes/igap/igapvendorproductva
 // IGAP APIs routing for End
 
 // Business APIs routing for Beginning
-app.use("/business/vendor",require("./routes/business/businessvendor"));
 app.use("/business/productcategory", require("./routes/business/businessproductcategory"));
 app.use("/business/product", require("./routes/business/businessproduct"));
 app.use("/business/productpicture" , require("./routes/business/businessproductpicture"));
@@ -60,6 +120,7 @@ app.use("/business/banner", require("./routes/business/businessbanner"));
 //User APIS routing start
 app.use("/user" , require("./routes/user/user"));
 app.use("/user/address" , require("./routes/user/useraddress"));
+app.use("/user/order" , require("./routes/user/order"));
 
 app.listen(8081, function() {
     console.log("website is  started");

@@ -4,9 +4,8 @@ var fs = require("fs");
 class BusinessProduct {
   id = 0;
   businessid = "";
-  igapvendorid = "";
-  businessvendorid = "";
-  businessproductcategoryid = "";
+  igapvendorid = 0;
+  igapvendorproductid = 0;
   name = "";
   title = "";
   description = "";
@@ -25,8 +24,7 @@ class BusinessProduct {
     this.id = 0;
     this.businessid = 0;
     this.igapvendorid = 0;
-    this.businessvendorid = "";
-    this.businessproductcategoryid = "";
+    this.igapvendorproductid = "";
     this.name = "";
     this.title = "";
     this.description = "";
@@ -52,16 +50,15 @@ class BusinessProduct {
   }
 
     if (this.id == 0) {
-      this.query = "INSERT INTO business_products(businessid, igapvendorid, businessvendorid, businessproductcategoryid, name, title, description, specification, mrp, price, weight, instock, affiliatepercent, picpath, status) ";
-      this.query += "VALUES (" + this.businessid + ", " + this.igapvendorid + ", " + this.businessvendorid + ", ";
-      this.query += this.businessproductcategoryid + " , '" + this.name + "', '" + this.title + "', '" + this.description +"', ";
+      this.query = "INSERT INTO business_products(businessid, igapvendorid, igapvendorproductid, name, title, description, specification, mrp, price, weight, instock, affiliatepercent, picpath, status) ";
+      this.query += "VALUES (" + this.businessid + ", " + this.igapvendorid + ", ";
+      this.query += this.igapvendorproductid + " , '" + this.name + "', '" + this.title + "', '" + this.description +"', ";
       this.query += "'" +this.specification +  "', " + this.mrp + ", " + this.price + ", " + this.weight + ", '" + this.instock + "', 0, '" + this.picpath + "', 'open')";
     } 
     else {
       this.query = "UPDATE business_products SET businessid = " + this.businessid + ", ";
       this.query += "igapvendorid = " + this.igapvendorid + ", ";
-      this.query += "businessvendorid = " + this.businessvendorid + ", ";
-      this.query += "businessproductcategoryid = " + this.businessproductcategoryid + ", ";
+      this.query += "igapvendorproductid = " + this.igapvendorproductid + ", ";
       this.query += "name = '" + this.name + "', ";
       this.query += "title = '" + this.title + "', ";
       this.query += "description = '" + this.description + "', ";

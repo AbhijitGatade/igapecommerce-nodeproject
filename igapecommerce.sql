@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2022 at 04:07 PM
+-- Generation Time: May 06, 2022 at 09:47 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -35,6 +35,13 @@ CREATE TABLE `admins` (
   `firebaseid` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `username`, `password`, `firebaseid`) VALUES
+(1, 'Abhijit Gatade', 'admin', 'admin', 'fdfsf');
+
 -- --------------------------------------------------------
 
 --
@@ -54,8 +61,21 @@ CREATE TABLE `businesses` (
   `description` varchar(500) NOT NULL,
   `joiningdate` date NOT NULL,
   `expirydate` date NOT NULL,
+  `localrate500` double DEFAULT 0,
+  `staterate500` double DEFAULT 0,
+  `nationalrate500` double DEFAULT 0,
+  `localrate500plus` double DEFAULT 0,
+  `staterate500plus` double DEFAULT 0,
+  `nationalrate500plus` double DEFAULT 0,
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `businesses`
+--
+
+INSERT INTO `businesses` (`id`, `name`, `title`, `address`, `cityid`, `email`, `mobileno`, `password`, `pincode`, `description`, `joiningdate`, `expirydate`, `localrate500`, `staterate500`, `nationalrate500`, `localrate500plus`, `staterate500plus`, `nationalrate500plus`, `status`) VALUES
+(1, 'Vipras India', 'vipras-india', 'kop', 1, 'vipras@gmail.com', '9876543210', 'vipras', '416001', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -187,6 +207,49 @@ CREATE TABLE `business_coupons` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `business_dealproducts`
+--
+
+CREATE TABLE `business_dealproducts` (
+  `id` int(11) NOT NULL,
+  `dealid` int(11) DEFAULT NULL,
+  `productid` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_dealproducts`
+--
+
+INSERT INTO `business_dealproducts` (`id`, `dealid`, `productid`) VALUES
+(2, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_deals`
+--
+
+CREATE TABLE `business_deals` (
+  `id` int(11) NOT NULL,
+  `businessid` int(11) NOT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `startdate` date DEFAULT NULL,
+  `enddate` date DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_deals`
+--
+
+INSERT INTO `business_deals` (`id`, `businessid`, `title`, `startdate`, `enddate`, `description`, `status`) VALUES
+(2, 1, 'Abhijit ', '2022-04-11', '2022-05-15', 'close', NULL),
+(3, 1, 'Abhijit ', '2022-04-11', '2022-05-15', 'trial coupon', 'close');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `business_productcategories`
 --
 
@@ -245,8 +308,7 @@ CREATE TABLE `business_products` (
   `id` int(11) NOT NULL,
   `businessid` int(11) NOT NULL,
   `igapvendorid` int(11) NOT NULL,
-  `businessvendorid` int(11) NOT NULL,
-  `businessproductcategoryid` int(11) NOT NULL,
+  `igapvendorproductid` int(11) DEFAULT NULL,
   `name` varchar(500) NOT NULL,
   `title` varchar(500) NOT NULL,
   `description` text NOT NULL,
@@ -264,8 +326,8 @@ CREATE TABLE `business_products` (
 -- Dumping data for table `business_products`
 --
 
-INSERT INTO `business_products` (`id`, `businessid`, `igapvendorid`, `businessvendorid`, `businessproductcategoryid`, `name`, `title`, `description`, `specification`, `mrp`, `price`, `weight`, `picpath`, `instock`, `affiliatepercent`, `status`) VALUES
-(13, 2, 1, 1, 1, 'Pen Drive', 'pen-drive', 'description', 'spectification', 2000, 1500, 100, 'businessproducts/39rtf.png', 'Yes', 2, 'open');
+INSERT INTO `business_products` (`id`, `businessid`, `igapvendorid`, `igapvendorproductid`, `name`, `title`, `description`, `specification`, `mrp`, `price`, `weight`, `picpath`, `instock`, `affiliatepercent`, `status`) VALUES
+(13, 2, 1, 1, 'Pen Drive', 'pen-drive', 'description', 'spectification', 2000, 1500, 100, 'businessproducts/mrhmw.png', 'Yes', 2, 'open');
 
 -- --------------------------------------------------------
 
@@ -308,23 +370,6 @@ CREATE TABLE `business_subscriptions` (
   `id` int(11) NOT NULL,
   `businessid` int(11) NOT NULL,
   `email` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `business_vendors`
---
-
-CREATE TABLE `business_vendors` (
-  `id` int(11) NOT NULL,
-  `businessid` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `mobileno` varchar(50) NOT NULL,
-  `address` varchar(200) NOT NULL,
-  `cityid` int(11) NOT NULL,
-  `pincode` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -444,10 +489,31 @@ CREATE TABLE `igap_vendors` (
   `id` int(11) NOT NULL,
   `name` varchar(500) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `password` varchar(500) DEFAULT NULL,
   `mobileno` varchar(50) NOT NULL,
   `address` varchar(500) NOT NULL,
   `cityid` int(11) NOT NULL,
   `pincode` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `igap_vendors`
+--
+
+INSERT INTO `igap_vendors` (`id`, `name`, `email`, `password`, `mobileno`, `address`, `cityid`, `pincode`) VALUES
+(1, 'Kuldeep Jadhav', 'kuldeep@gmail.com', 'kuldeep', '9876543210', 'Kolhapur', 1, '416001');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pincodes`
+--
+
+CREATE TABLE `pincodes` (
+  `id` int(11) NOT NULL,
+  `pincode` varchar(100) NOT NULL,
+  `district` varchar(100) NOT NULL,
+  `state` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -522,6 +588,102 @@ CREATE TABLE `user_addresses` (
   `addresstype` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_orderdetails`
+--
+
+CREATE TABLE `user_orderdetails` (
+  `id` int(11) NOT NULL,
+  `orderid` int(11) NOT NULL,
+  `orderinvoiceid` int(11) NOT NULL,
+  `productid` int(11) NOT NULL,
+  `color` varchar(500) DEFAULT NULL,
+  `size` varchar(500) DEFAULT NULL,
+  `productname` varchar(200) NOT NULL,
+  `price` double NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subtotal` double NOT NULL,
+  `dealid` int(11) NOT NULL,
+  `couponid` int(11) NOT NULL,
+  `coupontotal` double NOT NULL,
+  `shippingtotal` double NOT NULL,
+  `billtotal` double NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_orderdetails`
+--
+
+INSERT INTO `user_orderdetails` (`id`, `orderid`, `orderinvoiceid`, `productid`, `color`, `size`, `productname`, `price`, `quantity`, `subtotal`, `dealid`, `couponid`, `coupontotal`, `shippingtotal`, `billtotal`, `status`) VALUES
+(1, 1, 1, 1, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(2, 1, 1, 2, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(3, 1, 2, 3, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(4, 1, 2, 4, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(5, 2, 3, 1, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(6, 2, 3, 2, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(7, 2, 4, 3, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid'),
+(8, 2, 4, 4, 'red', 'XL', 'abc', 2022, 4, 233, 20, 607, 120, 200, 5000, 'paid');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_orderinvoices`
+--
+
+CREATE TABLE `user_orderinvoices` (
+  `id` int(11) NOT NULL,
+  `orderid` int(11) NOT NULL,
+  `igapvendorid` int(11) NOT NULL,
+  `subtotal` double NOT NULL,
+  `shippingtotal` double NOT NULL,
+  `coupontotal` double NOT NULL,
+  `billtotal` double NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_orderinvoices`
+--
+
+INSERT INTO `user_orderinvoices` (`id`, `orderid`, `igapvendorid`, `subtotal`, `shippingtotal`, `coupontotal`, `billtotal`, `status`) VALUES
+(1, 1, 0, 345, 45, 345, 3459, 'paid'),
+(2, 1, 1, 24, 234, 43, 4000, 'paid'),
+(3, 2, 2, 345, 45, 345, 3459, 'paid'),
+(4, 2, 3, 24, 234, 43, 4000, 'paid');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_orders`
+--
+
+CREATE TABLE `user_orders` (
+  `id` int(11) NOT NULL,
+  `paymentcode` varchar(50) NOT NULL,
+  `businessid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `shippingaddressid` int(11) NOT NULL,
+  `billingaddressid` int(11) NOT NULL,
+  `orderdon` datetime NOT NULL,
+  `subtotal` double NOT NULL,
+  `shippingtotal` double NOT NULL,
+  `couponid` int(11) NOT NULL,
+  `coupontotal` double NOT NULL,
+  `billtotal` double NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_orders`
+--
+
+INSERT INTO `user_orders` (`id`, `paymentcode`, `businessid`, `userid`, `shippingaddressid`, `billingaddressid`, `orderdon`, `subtotal`, `shippingtotal`, `couponid`, `coupontotal`, `billtotal`, `status`) VALUES
+(1, 'hello', 1, 1, 2, 4, '0000-00-00 00:00:00', 6, 50, 6, 300, 500, 'paid'),
+(2, 'hello', 2, 2, 2, 4, '0000-00-00 00:00:00', 6, 50, 6, 300, 500, 'paid');
+
 --
 -- Indexes for dumped tables
 --
@@ -581,6 +743,18 @@ ALTER TABLE `business_coupons`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `business_dealproducts`
+--
+ALTER TABLE `business_dealproducts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `business_deals`
+--
+ALTER TABLE `business_deals`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `business_productcategories`
 --
 ALTER TABLE `business_productcategories`
@@ -615,13 +789,6 @@ ALTER TABLE `business_productvarieties`
 --
 ALTER TABLE `business_subscriptions`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `business_vendors`
---
-ALTER TABLE `business_vendors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_businessid` (`businessid`);
 
 --
 -- Indexes for table `cities`
@@ -666,6 +833,12 @@ ALTER TABLE `igap_vendors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pincodes`
+--
+ALTER TABLE `pincodes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
@@ -690,6 +863,24 @@ ALTER TABLE `user_addresses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_orderdetails`
+--
+ALTER TABLE `user_orderdetails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_orderinvoices`
+--
+ALTER TABLE `user_orderinvoices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_orders`
+--
+ALTER TABLE `user_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -697,13 +888,13 @@ ALTER TABLE `user_addresses`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `businesses`
 --
 ALTER TABLE `businesses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `business_ads`
@@ -748,6 +939,18 @@ ALTER TABLE `business_coupons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `business_dealproducts`
+--
+ALTER TABLE `business_dealproducts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `business_deals`
+--
+ALTER TABLE `business_deals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `business_productcategories`
 --
 ALTER TABLE `business_productcategories`
@@ -782,12 +985,6 @@ ALTER TABLE `business_productvarieties`
 --
 ALTER TABLE `business_subscriptions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `business_vendors`
---
-ALTER TABLE `business_vendors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -829,6 +1026,12 @@ ALTER TABLE `igap_vendorproductvarieties`
 -- AUTO_INCREMENT for table `igap_vendors`
 --
 ALTER TABLE `igap_vendors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pincodes`
+--
+ALTER TABLE `pincodes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -854,6 +1057,24 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user_orderdetails`
+--
+ALTER TABLE `user_orderdetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `user_orderinvoices`
+--
+ALTER TABLE `user_orderinvoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user_orders`
+--
+ALTER TABLE `user_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

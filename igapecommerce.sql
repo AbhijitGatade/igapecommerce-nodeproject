@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2022 at 09:47 AM
+-- Generation Time: May 16, 2022 at 09:45 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -384,6 +384,13 @@ CREATE TABLE `cities` (
   `talukaid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `cities`
+--
+
+INSERT INTO `cities` (`id`, `name`, `talukaid`) VALUES
+(1, 'Kolhapur', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -395,6 +402,13 @@ CREATE TABLE `districts` (
   `name` varchar(100) NOT NULL,
   `stateid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `districts`
+--
+
+INSERT INTO `districts` (`id`, `name`, `stateid`) VALUES
+(1, 'Kolhapur', 1);
 
 -- --------------------------------------------------------
 
@@ -501,7 +515,8 @@ CREATE TABLE `igap_vendors` (
 --
 
 INSERT INTO `igap_vendors` (`id`, `name`, `email`, `password`, `mobileno`, `address`, `cityid`, `pincode`) VALUES
-(1, 'Kuldeep Jadhav', 'kuldeep@gmail.com', 'kuldeep', '9876543210', 'Kolhapur', 1, '416001');
+(1, 'Abhijit Gatade', 'gatadeabhijit@gmail.com', 'abcd', '9561320192', 'Hari Om Nagar', 1, '416001'),
+(9, 'Abhijit Gatade', 'apgatade@gmail.com', 'iGAP@3479', '9561320191', 'Hari Om Nagar, Kolhapur', 1, '416001');
 
 -- --------------------------------------------------------
 
@@ -527,6 +542,13 @@ CREATE TABLE `states` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `states`
+--
+
+INSERT INTO `states` (`id`, `name`) VALUES
+(1, 'Maharashtra');
+
 -- --------------------------------------------------------
 
 --
@@ -538,6 +560,13 @@ CREATE TABLE `talukas` (
   `name` varchar(100) NOT NULL,
   `districtid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `talukas`
+--
+
+INSERT INTO `talukas` (`id`, `name`, `districtid`) VALUES
+(1, 'Karvir', 1);
 
 -- --------------------------------------------------------
 
@@ -830,7 +859,9 @@ ALTER TABLE `igap_vendorproductvarieties`
 -- Indexes for table `igap_vendors`
 --
 ALTER TABLE `igap_vendors`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `mobileno` (`mobileno`);
 
 --
 -- Indexes for table `pincodes`
@@ -990,13 +1021,13 @@ ALTER TABLE `business_subscriptions`
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `igap_productcategories`
@@ -1026,7 +1057,7 @@ ALTER TABLE `igap_vendorproductvarieties`
 -- AUTO_INCREMENT for table `igap_vendors`
 --
 ALTER TABLE `igap_vendors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `pincodes`
@@ -1038,13 +1069,13 @@ ALTER TABLE `pincodes`
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `talukas`
 --
 ALTER TABLE `talukas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

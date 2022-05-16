@@ -8,6 +8,7 @@ router.post("/save", async (req, res) => {
   igapvendor.id = body.data.id;
   igapvendor.name = body.data.name;
   igapvendor.email = body.data.email;
+  igapvendor.password = body.data.password;
   igapvendor.mobileno = body.data.mobileno;
   igapvendor.address = body.data.address;
   igapvendor.cityid = body.data.cityid;
@@ -26,6 +27,7 @@ router.post("/save", async (req, res) => {
       let data = {
         data: {
           status: "fail",
+		  message:err.sqlMessage
         },
       };
       res.end(JSON.stringify(data));

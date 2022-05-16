@@ -44,7 +44,7 @@ class City {
   list = () => {
     this.query = "SELECT * FROM cities ";
     if(this.talukaid != 0)
-            this.query += "WHERE talukaid = " + this.talukaid + " ";
+		this.query += "WHERE talukaid = " + this.talukaid + " ";
     this.query += "ORDER BY name";
     return new Promise((resolve, reject) => {
       this.db.query(this.query, (err, result) => {

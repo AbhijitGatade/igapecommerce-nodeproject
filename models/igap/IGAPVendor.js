@@ -5,6 +5,7 @@ class IGAPVendor {
     name = "";
     email = "";
     mobileno = "";
+	password = "";
     address = "";
     cityid = "";
     pincode = "";
@@ -16,6 +17,7 @@ class IGAPVendor {
         this.id = 0;
         this.name = "";
         this.email = "";
+		this.password = "";
         this.mobileno = "";
         this.address = "";
         this.cityid = "";
@@ -25,13 +27,14 @@ class IGAPVendor {
     save = ()=>{
         if(this.id == 0)
         {
-            this.query = "INSERT INTO igap_vendors(name, email, mobileno, address, cityid, pincode) ";
-            this.query += "VALUES ('" + this.name + "', '" + this.email + "', '" + this.mobileno + "', '" + this.address + "', " + this.cityid + ", '" + this.pincode + "')";
+            this.query = "INSERT INTO igap_vendors(name, email, password, mobileno, address, cityid, pincode) ";
+            this.query += "VALUES ('" + this.name + "', '" + this.email + "',  '" + this.password + "', '" + this.mobileno + "', '" + this.address + "', " + this.cityid + ", '" + this.pincode + "')";
         }
         else
         {
             this.query = "UPDATE igap_vendors SET name = '" + this.name + "', ";
             this.query += "email = '" + this.email +"', ";
+			this.query += "password = '" + this.password +"', ";
             this.query += "address = '" + this.address +"', ";
             this.query += "cityid= " + this.cityid + ", ";
             this.query += "pincode = '" + this.pincode +"' ";
@@ -41,7 +44,7 @@ class IGAPVendor {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();
                 if (err) {
-                    return rejects(err);
+					return rejects(err);
                 }
                 resolve(result);
             });
@@ -62,7 +65,8 @@ class IGAPVendor {
     }
 
     list = () =>{
-        this.query = "SELECT * FROM igap_vendors ORDER BY name";
+		this.query = "SELECT V.*, C.name AS cityname ";
+		this.query += "FROM igap_vendors AS V, cities AS C WHERE V.cityid = C.id ORDER BY V.name";
         return new Promise((resolve, rejects)=> {
             this.db.query(this.query,(err, result)=>{
                 this.db.close();

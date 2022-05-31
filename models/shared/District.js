@@ -47,10 +47,11 @@ class District {
     }
 
     list=()=>{
-        this.query = "SELECT * FROM districts ";
+        this.query = "SELECT D.*, S.name AS statename FROM districts AS D, states AS S WHERE D.stateid = S.id ";
         if(this.stateid != 0)
-            this.query += "WHERE stateid = " + this.stateid + " ";
-        this.query += "ORDER BY name";
+            this.query += "AND D.stateid = " + this.stateid + " ";
+        this.query += "ORDER BY D.name";
+        console.log(this.query);
         return new Promise((resolve, reject)=>{
             this.db.query(this.query, (err, result)=>{
                 this.db.close();

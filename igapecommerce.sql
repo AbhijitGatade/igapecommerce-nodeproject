@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2022 at 09:45 AM
+-- Generation Time: Jun 01, 2022 at 07:54 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -40,7 +40,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `username`, `password`, `firebaseid`) VALUES
-(1, 'Abhijit Gatade', 'admin', 'admin', 'fdfsf');
+(1, 'Abhijit Gatade', 'admin', 'admin', 'fdfsf'),
+(2, 'Dilip Gatade', 'dilip', 'admin', 'undefined');
 
 -- --------------------------------------------------------
 
@@ -51,14 +52,13 @@ INSERT INTO `admins` (`id`, `name`, `username`, `password`, `firebaseid`) VALUES
 CREATE TABLE `businesses` (
   `id` int(11) NOT NULL,
   `name` varchar(110) NOT NULL,
-  `title` varchar(200) NOT NULL,
+  `website` varchar(200) NOT NULL,
   `address` varchar(200) NOT NULL,
   `cityid` int(11) NOT NULL,
   `email` varchar(200) NOT NULL,
   `mobileno` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `pincode` varchar(50) NOT NULL,
-  `description` varchar(500) NOT NULL,
   `joiningdate` date NOT NULL,
   `expirydate` date NOT NULL,
   `localrate500` double DEFAULT 0,
@@ -74,8 +74,10 @@ CREATE TABLE `businesses` (
 -- Dumping data for table `businesses`
 --
 
-INSERT INTO `businesses` (`id`, `name`, `title`, `address`, `cityid`, `email`, `mobileno`, `password`, `pincode`, `description`, `joiningdate`, `expirydate`, `localrate500`, `staterate500`, `nationalrate500`, `localrate500plus`, `staterate500plus`, `nationalrate500plus`, `status`) VALUES
-(1, 'Vipras India', 'vipras-india', 'kop', 1, 'vipras@gmail.com', '9876543210', 'vipras', '416001', '', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, '');
+INSERT INTO `businesses` (`id`, `name`, `website`, `address`, `cityid`, `email`, `mobileno`, `password`, `pincode`, `joiningdate`, `expirydate`, `localrate500`, `staterate500`, `nationalrate500`, `localrate500plus`, `staterate500plus`, `nationalrate500plus`, `status`) VALUES
+(1, 'Vipras India', 'vipras-india', 'kop', 1, 'vipras@gmail.com', '9876543210', 'vipras', '416001', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, ''),
+(2, 'iGAP', 'http://www.igap.com', 'Hari Om Nagar', 1, 'gatadeabhijit@gmail.com', '9561320192', 'aaa', '416008', '2022-05-27', '2021-05-27', 0, 0, 0, 0, 0, 0, 'active'),
+(4, 'Kishor Store', 'https://kishor.com', 'Hari Om Nagar', 1, 'kishor@gmail.com', '9561320192', 'kishor', 'undefined', '2022-05-27', '2023-05-27', 0, 0, 0, 0, 0, 0, 'active');
 
 -- --------------------------------------------------------
 
@@ -146,7 +148,8 @@ INSERT INTO `business_blogcategories` (`id`, `businessid`, `title`, `urltitle`, 
 (3, 5, 'abcddf⏱', 'hello', 0),
 (4, 5, 'abcddf', 'pqrsf', 4),
 (5, 5, 'Welcome', 'hello', 0),
-(6, 5, 'Welcome', 'hello', 40);
+(6, 5, 'Welcome', 'hello', 40),
+(8, 2, 'Angular Minds', 'angular', 1);
 
 -- --------------------------------------------------------
 
@@ -172,9 +175,9 @@ CREATE TABLE `business_blogs` (
 --
 
 INSERT INTO `business_blogs` (`id`, `businessid`, `categoryid`, `title`, `urltitle`, `createdon`, `author`, `picpath`, `body`, `status`) VALUES
-(5, 2, 2, 'myproduct', 'myproduct/product', 'team', 'harsh', 'businessproductcategories/fi9za.png', 'good product', NULL),
 (6, 6, 6, 'myproduct', 'myproduct/product', 'team', 'harsh', 'businessproductcategories/hiron.png', 'good product', NULL),
-(8, 5, 0, 'harsh', 'nilesh', 'pradip', 'shree', 'businessblog/poyoo.png', 'suryakant', 'active');
+(8, 5, 0, 'harsh', 'nilesh', 'pradip', 'shree', 'businessblog/poyoo.png', 'suryakant', 'active'),
+(10, 2, 8, 'Angular 1', 'angular', '01 June 2022', 'Abhijit Gatade', 'businessblogs/0df9t.png', 'Hello', 'inactive');
 
 -- --------------------------------------------------------
 
@@ -381,15 +384,15 @@ CREATE TABLE `business_subscriptions` (
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `talukaid` int(11) NOT NULL
+  `stateid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cities`
 --
 
-INSERT INTO `cities` (`id`, `name`, `talukaid`) VALUES
-(1, 'Kolhapur', 1);
+INSERT INTO `cities` (`id`, `name`, `stateid`) VALUES
+(1, 'Kolhapur', NULL);
 
 -- --------------------------------------------------------
 
@@ -408,7 +411,8 @@ CREATE TABLE `districts` (
 --
 
 INSERT INTO `districts` (`id`, `name`, `stateid`) VALUES
-(1, 'Kolhapur', 1);
+(4, 'Kolhapur', 1),
+(5, 'Belgaon', 4);
 
 -- --------------------------------------------------------
 
@@ -422,6 +426,13 @@ CREATE TABLE `igap_productcategories` (
   `picpath` varchar(100) DEFAULT NULL,
   `srno` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `igap_productcategories`
+--
+
+INSERT INTO `igap_productcategories` (`id`, `name`, `picpath`, `srno`) VALUES
+(1, 'Cloths', 'productcategories/cfyde.png', 1);
 
 -- --------------------------------------------------------
 
@@ -547,26 +558,8 @@ CREATE TABLE `states` (
 --
 
 INSERT INTO `states` (`id`, `name`) VALUES
-(1, 'Maharashtra');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `talukas`
---
-
-CREATE TABLE `talukas` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `districtid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `talukas`
---
-
-INSERT INTO `talukas` (`id`, `name`, `districtid`) VALUES
-(1, 'Karvir', 1);
+(1, 'Maharashtra'),
+(4, 'Karnataka');
 
 -- --------------------------------------------------------
 
@@ -823,7 +816,8 @@ ALTER TABLE `business_subscriptions`
 -- Indexes for table `cities`
 --
 ALTER TABLE `cities`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fK_city_id` (`stateid`);
 
 --
 -- Indexes for table `districts`
@@ -876,12 +870,6 @@ ALTER TABLE `states`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `talukas`
---
-ALTER TABLE `talukas`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -919,13 +907,13 @@ ALTER TABLE `user_orders`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `businesses`
 --
 ALTER TABLE `businesses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `business_ads`
@@ -949,13 +937,13 @@ ALTER TABLE `business_banners`
 -- AUTO_INCREMENT for table `business_blogcategories`
 --
 ALTER TABLE `business_blogcategories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `business_blogs`
 --
 ALTER TABLE `business_blogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `business_couponproducts`
@@ -1027,13 +1015,13 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `igap_productcategories`
 --
 ALTER TABLE `igap_productcategories`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `igap_vendorproductpictures`
@@ -1069,13 +1057,7 @@ ALTER TABLE `pincodes`
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `talukas`
---
-ALTER TABLE `talukas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1106,6 +1088,16 @@ ALTER TABLE `user_orderinvoices`
 --
 ALTER TABLE `user_orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cities`
+--
+ALTER TABLE `cities`
+  ADD CONSTRAINT `fK_city_id` FOREIGN KEY (`stateid`) REFERENCES `states` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -70,10 +70,11 @@ class BusinessBlog {
     }
 
     list = () => {
-        this.query = "SELECT * FROM business_blogs WHERE businessid = " + this.businessid + " ";
+        this.query = "SELECT BB.*, BBC.title AS categoryname FROM business_blogcategories AS BBC, business_blogs AS BB ";
+        this.query += "WHERE BB.categoryid = BBC.id AND BB.businessid = " + this.businessid + " ";
         if(this.categoryid)
-            this.query += "AND categoryid = " + this.categoryid + " ";
-        this.query += "ORDER BY id";
+            this.query += "AND BB.categoryid = " + this.categoryid + " ";
+        this.query += "ORDER BY BB.id";
         return new Promise((resolve, reject) => {
           this.db.query(this.query, (err, result) => {
             this.db.close();

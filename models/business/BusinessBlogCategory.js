@@ -33,6 +33,7 @@ class BusinessBlogCategory {
           this.query += "srno = " + this.srno + " ";
           this.query += " WHERE id =" + this.id;
         }
+        console.log(this.query);
         return new Promise((resolve, reject) => {
             this.db.query(this.query, (err, result) => {
                 this.db.close();

@@ -36,7 +36,9 @@ class State{
         });           
     }
     list=()=>{
-        this.query =  "SELECT *, (SELECT COUNT(*) FROM districts WHERE stateid = S.id) AS districtcount FROM states AS S ORDER BY name";
+        this.query =  "SELECT *, (SELECT COUNT(*) FROM districts WHERE stateid = S.id) AS districtcount, ";
+        this.query += "(SELECT COUNT(*) FROM cities WHERE stateid = S.id) AS citycount ";
+        this.query +=  "FROM states AS S ORDER BY name";
         return new Promise((resolve, reject)=>{
             this.db.query(this.query, (err, result)=>{
                 this.db.close();

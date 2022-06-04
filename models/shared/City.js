@@ -3,22 +3,22 @@ let Database = require("../Database");
 class City {
   id = 0;
   name = "";
-  talukaid = 0;
+  stateid = 0;
 
   db = new Database.Database();
 
   constructor() {
     this.id = 0;
     this.name = "";
-    this.talukaid = 0;
+    this.stateid = 0;
   }
   save = () => {
     if (this.id == 0) {
-      this.query = "INSERT INTO cities(name, talukaid)  ";
-      this.query += "VALUES ('" + this.name + "', " + this.talukaid + ")";
+      this.query = "INSERT INTO cities(name, stateid)  ";
+      this.query += "VALUES ('" + this.name + "', " + this.stateid + ")";
     } else {
       this.query = "UPDATE cities SET name = '" + this.name + "', ";
-      this.query += "talukaid = " + this.talukaid + " ";
+      this.query += "stateid = " + this.stateid + " ";
       this.query += "WHERE id = " + this.id;
     }
     return new Promise((resolve, reject) => {
@@ -43,8 +43,8 @@ class City {
 
   list = () => {
     this.query = "SELECT * FROM cities ";
-    if(this.talukaid != 0)
-		this.query += "WHERE talukaid = " + this.talukaid + " ";
+    if(this.stateid != 0)
+		this.query += "WHERE stateid = " + this.stateid + " ";
     this.query += "ORDER BY name";
     return new Promise((resolve, reject) => {
       this.db.query(this.query, (err, result) => {

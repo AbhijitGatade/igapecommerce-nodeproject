@@ -1,14 +1,15 @@
 var express = require("express");
-var City = require("../../models/shared/City");
+var Pincode = require("../../models/igap/Pincode");
 const router = express.Router();
 
 router.post("/save", async (req, res) => {
   let body = req.body;
-  let city = new City.City();
-  city.id = body.data.id;
-  city.name = body.data.name;
-  city.stateid = body.data.stateid;
-  city.save().then(
+  let pincode = new Pincode.Pincode();
+  pincode.id = body.data.id;
+  pincode.pincode = body.data.pincode;
+  pincode.stateid = body.data.stateid;
+  pincode.districtid = body.data.districtid;
+  pincode.save().then(
     (result) => {
       let data = {
         data: {
@@ -31,9 +32,9 @@ router.post("/save", async (req, res) => {
 
 router.post("/list", async (req, res) => {
   let body = req.body;
-  let city = new City.City();
-  city.stateid = body.data.stateid;
-  city.list().then(
+  let pincode = new Pincode.Pincode();
+
+  pincode.list().then(
     (result) => {
       let data = {
         data: {
@@ -56,9 +57,9 @@ router.post("/list", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   let body = req.body;
-  let city = new City.City();
-  city.id = body.data.id;
-  city.delete().then(
+  let pincode = new Pincode.Pincode();
+  pincode.id = body.data.id;
+  pincode.delete().then(
     (result) => {
       let data = {
         data: {
@@ -81,9 +82,9 @@ router.post("/delete", async (req, res) => {
 
 router.post("/get", async (req, res) => {
   let body = req.body;
-  let city = new City.City();
-  city.id = body.data.id;
-  city.get().then(
+  let pincode = new Pincode.Pincode();
+  pincode.id = body.data.id;
+  pincode.get().then(
     (result) => {
       let data = {
         data: {

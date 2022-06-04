@@ -43,7 +43,6 @@ class BusinessProductCategory {
 
             this.query += "WHERE id = " + this.id;
         }
-        console.log(this.query);
         return new Promise((resolve, reject) => {
             this.db.query(this.query, (err, result) => {
                 this.db.close();
@@ -78,6 +77,7 @@ class BusinessProductCategory {
             });
         });
     }
+    
     get = () => {
         this.query = "SELECT * FROM business_productcategories WHERE id = " + this.id;
         return new Promise((resolve, reject) => {

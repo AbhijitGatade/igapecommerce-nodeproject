@@ -41,7 +41,7 @@ class BusinessBanner {
             if(this.picpath != "")
                 this.query += "picpath = '" + this.picpath + "', ";
             this.query += "srno = " + this.srno + ", ";
-            this.query += "link = " + this.link + " ";
+            this.query += "link = '" + this.link + "' ";
             this.query += "WHERE id = " + this.id;
         }        
         return new Promise((resolve, reject)=>{

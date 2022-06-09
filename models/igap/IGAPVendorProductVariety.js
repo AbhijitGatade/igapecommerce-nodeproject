@@ -52,7 +52,7 @@ class IGAPVendorProductVariety{
                 }
                 resolve(result);
             });
-        });        
+        });
     }
 
     get = () =>{

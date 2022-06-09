@@ -11,7 +11,8 @@ const router = express.Router();
     igapvendorproduct.igapvendorid = body.data.igapvendorid;
     igapvendorproduct.igaproductcategoryid = body.data.igaproductcategoryid;
     igapvendorproduct.name = body.data.name;
-    igapvendorproduct.title = body.data.title;
+    igapvendorproduct.title = body.data.name.toLowerCase().replace(/[^\w\s]/gi, '-');
+    igapvendorproduct.title = igapvendorproduct.title.replace(/ /gi, '-');
     igapvendorproduct.description = body.data.description;
     igapvendorproduct.specification = body.data.specification;
     // igapvendorproduct.picpath = body.data.picpath;
@@ -34,6 +35,7 @@ const router = express.Router();
           let data = {
             data: {
               status: "fail",
+              message:err
             },
           };
           res.end(JSON.stringify(data));
@@ -97,6 +99,32 @@ const router = express.Router();
         igapvendorproduct.id = body.data.id;
         igapvendorproduct.status = body.data.status;
         igapvendorproduct.changestatus().then(
+          (result) => {
+            let data = {
+              data: {
+                status: "success",
+                data: result,
+              },
+            };
+            res.end(JSON.stringify(data));
+          },
+          (err) => {
+            let data = {
+              data: {
+                status: "fail",
+              },
+            };
+            res.end(JSON.stringify(data));
+          }
+        );
+      });
+
+      router.post("/changeinstock", async (req, res) => {
+        let body = req.body;
+        let igapvendorproduct = new IGAPVendorProduct.IGAPVendorProduct();
+        igapvendorproduct.id = body.data.id;
+        igapvendorproduct.instock = body.data.instock;
+        igapvendorproduct.changeinstock().then(
           (result) => {
             let data = {
               data: {

@@ -79,6 +79,19 @@ class Admin {
       });
     });
   };
+
+  changesrno = (id, srno, tablename) => {
+    this.query = "UPDATE " + tablename + " SET srno = " + srno + " WHERE id = " + id;
+    console.log(this.query);
+    return new Promise((resolve, reject) => {
+      this.db.query(this.query, (err, result) => {
+        this.db.close();
+        if (err) reject(err);
+        resolve(result);
+      });
+    });
+  };
+
 }
 
 module.exports = {

@@ -5,7 +5,6 @@ class Pincode {
     pincode = "";
     stateid = 0;
     districtid = 0;
-
     query = "";
     db = new Database.Database();
 

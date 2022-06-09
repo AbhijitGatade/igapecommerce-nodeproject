@@ -105,4 +105,28 @@ router.post("/get", async (req, res) => {
   );
 });
 
+router.post("/changesrno", async (req, res) => {
+  let body = req.body;
+  let admin = new Admin.Admin();
+  admin.changesrno(body.data.id, body.data.srno, body.data.tablename).then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
 module.exports = router;

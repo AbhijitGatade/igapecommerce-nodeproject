@@ -67,6 +67,8 @@ class IGAPVendorProduct {
       this.query += "instock = '" + this.instock + "' ";
       this.query += " WHERE id =" + this.id;
     }
+
+    console.log(this.query);
     return new Promise((resolve, reject) => {
       this.db.query(this.query, (err, result) => {
         this.db.close();
@@ -79,10 +81,13 @@ class IGAPVendorProduct {
   };
 
   list = () => {
-    this.query = "SELECT * FROM igap_vendorproducts ";
+    this.query = "SELECT VP.*, PC.name AS categoryname, ";
+    this.query += "(SELECT COUNT(*) FROM igap_vendorproductpictures AS VPP WHERE VPP.productid = VP.id) AS picturecount, ";
+    this.query += "(SELECT COUNT(*) FROM igap_vendorproductvarieties AS VPV WHERE VPV.productid = VP.id) AS varietycount ";
+    this.query += "FROM igap_productcategories AS PC, igap_vendorproducts AS VP WHERE PC.id = VP.igaproductcategoryid ";
     if(this.igapvendorid != 0)
-        this.query += "WHERE igapvendorid = " + this.igapvendorid + " ";
-    this.query += "ORDER BY name";
+        this.query += "AND igapvendorid = " + this.igapvendorid + " ";
+    this.query += "ORDER BY VP.name";
     return new Promise((resolve, reject) => {
       this.db.query(this.query, (err, result) => {
         this.db.close();
@@ -97,6 +102,17 @@ class IGAPVendorProduct {
   
   changestatus = () => {
     this.query = "UPDATE igap_vendorproducts SET status = '" + this.status + "' WHERE id = " + this.id;
+    return new Promise((resolve, reject) => {
+      this.db.query(this.query, (err, result) => {
+        this.db.close();
+        if (err) reject(err);
+        resolve(result);
+      });
+    });
+  };
+
+  changeinstock = () => {
+    this.query = "UPDATE igap_vendorproducts SET instock = '" + this.instock + "' WHERE id = " + this.id;
     return new Promise((resolve, reject) => {
       this.db.query(this.query, (err, result) => {
         this.db.close();

@@ -82,6 +82,32 @@ router.post("/delete", async (req, res) => {
   );
 });
 
+router.post("/changesrno", async (req, res) => {
+  let body = req.body;
+  let igapvendorproductpicture = new IGAPVendorProductPicture.IGAPVendorProductPicture();
+  igapvendorproductpicture.id = body.data.id;
+  igapvendorproductpicture.srno = body.data.srno;
+  igapvendorproductpicture.changesrno().then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
 router.post("/get", async (req, res) => {
   let body = req.body;
   let igapvendorproductpicture = new IGAPVendorProductPicture.IGAPVendorProductPicture();

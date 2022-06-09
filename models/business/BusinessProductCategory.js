@@ -9,6 +9,7 @@ class BusinessProductCategory {
     picpath = "";
     name = "";
     imagecode = "";
+    igaproductcategoryid = 0;
 
     db = new Database.Database();
 
@@ -19,6 +20,7 @@ class BusinessProductCategory {
         this.picpath = "";
         this.imagecode = "";
         this.name = "";
+        this.igaproductcategoryid = 0;
     }
 
     save = () => {
@@ -31,8 +33,8 @@ class BusinessProductCategory {
             });
         }
         if (this.id == 0) {
-            this.query = "INSERT INTO business_productcategories(businessid, srno, picpath, name) ";
-            this.query += "VALUES(" + this.businessid + ", " + this.srno + ", '" + this.picpath + "', '" + this.name + "')";
+            this.query = "INSERT INTO business_productcategories(businessid, srno, picpath, name, igaproductcategoryid) ";
+            this.query += "VALUES(" + this.businessid + ", " + this.srno + ", '" + this.picpath + "', '" + this.name + "', " + this.igaproductcategoryid + ")";
         }
         else {
             this.query = "UPDATE business_productcategories SET  businessid = " + this.businessid + ", ";
@@ -53,9 +55,36 @@ class BusinessProductCategory {
             });
         });
     }
+
     list = () => {
         this.query = "SELECT * FROM business_productcategories ";
         this.query += "WHERE businessid = " + this.businessid + " ORDER BY srno";
+        return new Promise((resolve, reject) => {
+            this.db.query(this.query, (err, result) => {
+                this.db.close();
+                if (err)
+                    reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    copy = (categoryid) => {
+        this.query = "INSERT INTO business_productcategories(businessid, srno, picpath, name, igaproductcategoryid) ";
+        this.query += "SELECT " + this.businessid + ", 1, picpath, name, " + categoryid + " FROM igap_productcategories WHERE id = " + categoryid;
+        return new Promise((resolve, reject) => {
+            this.db.query(this.query, (err, result) => {
+                this.db.close();
+                if (err)
+                    reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    listtocopy = () => {
+        this.query = "SELECT * FROM igap_productcategories ";
+        this.query += "WHERE id NOT IN(SELECT igaproductcategoryid FROM business_productcategories WHERE businessid = " + this.businessid + ")";
         return new Promise((resolve, reject) => {
             this.db.query(this.query, (err, result) => {
                 this.db.close();

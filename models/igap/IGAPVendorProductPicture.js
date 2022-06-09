@@ -65,7 +65,7 @@ class IGAPVendorProductPicture {
     }
 
     list=()=>{
-        this.query =  "SELECT * FROM igap_vendorproductpictures WHERE productid = " + this.productid;
+        this.query =  "SELECT * FROM igap_vendorproductpictures WHERE productid = " + this.productid + " ORDER BY srno";
         return new Promise((resolve, reject)=>{
             this.db.query(this.query, (err, result)=>{
                 this.db.close();
@@ -94,6 +94,18 @@ class IGAPVendorProductPicture {
               });
             });
         });
+    };
+
+    changesrno=()=>{
+        this.query = "UPDATE igap_vendorproductpictures SET srno = " + this.srno + " WHERE id = " + this.id;
+        return new Promise((resolve, reject)=>{
+            this.db.query(this.query, (err, result)=>{
+                this.db.close();
+                if(err)
+                    return reject(err);                
+                resolve(result);
+            });
+        });    
     };
 }
 module.exports={

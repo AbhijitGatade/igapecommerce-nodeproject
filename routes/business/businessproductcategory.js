@@ -107,4 +107,56 @@ router.post("/get", async (req, res) => {
   );
 });
 
+
+router.post("/listtocopy", async (req, res) => {
+  let body = req.body;
+  let businessproductcategory = new BusinessProductCategory.BusinessProductCategory();
+  businessproductcategory.businessid = body.data.businessid;
+  businessproductcategory.listtocopy().then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
+router.post("/copy", async (req, res) => {
+  let body = req.body;
+  let businessproductcategory = new BusinessProductCategory.BusinessProductCategory();
+  businessproductcategory.businessid = body.data.businessid;
+  businessproductcategory.copy(body.data.categoryid).then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
+
 module.exports = router;

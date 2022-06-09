@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2022 at 07:54 AM
+-- Generation Time: Jun 09, 2022 at 10:44 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `username`, `password`, `firebaseid`) VALUES
-(1, 'Abhijit Gatade', 'admin', 'admin', 'fdfsf'),
+(1, 'Abhijit Gatade', 'admin', 'admin', 'undefined'),
 (2, 'Dilip Gatade', 'dilip', 'admin', 'undefined');
 
 -- --------------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE `businesses` (
 
 INSERT INTO `businesses` (`id`, `name`, `website`, `address`, `cityid`, `email`, `mobileno`, `password`, `pincode`, `joiningdate`, `expirydate`, `localrate500`, `staterate500`, `nationalrate500`, `localrate500plus`, `staterate500plus`, `nationalrate500plus`, `status`) VALUES
 (1, 'Vipras India', 'vipras-india', 'kop', 1, 'vipras@gmail.com', '9876543210', 'vipras', '416001', '0000-00-00', '0000-00-00', 0, 0, 0, 0, 0, 0, ''),
-(2, 'iGAP', 'http://www.igap.com', 'Hari Om Nagar', 1, 'gatadeabhijit@gmail.com', '9561320192', 'aaa', '416008', '2022-05-27', '2021-05-27', 0, 0, 0, 0, 0, 0, 'active'),
+(2, 'iGAP', 'undefined', 'Hari Om Nagar', 1, 'gatadeabhijit@gmail.com', '9561320192', 'aaa', 'undefined', '2022-05-27', '2021-05-27', 0, 0, 0, 0, 0, 0, 'active'),
 (4, 'Kishor Store', 'https://kishor.com', 'Hari Om Nagar', 1, 'kishor@gmail.com', '9561320192', 'kishor', 'undefined', '2022-05-27', '2023-05-27', 0, 0, 0, 0, 0, 0, 'active');
 
 -- --------------------------------------------------------
@@ -123,6 +123,16 @@ CREATE TABLE `business_banners` (
   `link` varchar(200) NOT NULL,
   `srno` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_banners`
+--
+
+INSERT INTO `business_banners` (`id`, `businessid`, `title`, `picpath`, `link`, `srno`) VALUES
+(3, 2, 'Second', 'businessbanners/w816m.png', 'http://google.com', 5),
+(4, 2, 'hello', 'businessbanners/tiuyo.png', 'sada', 1),
+(5, 2, 'sfs', 'businessbanners/4fz39.png', 'sdfsd', 4),
+(6, 2, 'fdsf', 'businessbanners/29y24.png', 'fsdfsd', 2);
 
 -- --------------------------------------------------------
 
@@ -261,8 +271,17 @@ CREATE TABLE `business_productcategories` (
   `businessid` int(11) NOT NULL,
   `srno` int(11) NOT NULL,
   `picpath` varchar(500) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL,
+  `igaproductcategoryid` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `business_productcategories`
+--
+
+INSERT INTO `business_productcategories` (`id`, `businessid`, `srno`, `picpath`, `name`, `igaproductcategoryid`) VALUES
+(1, 2, 2, 'businessproductcategories/xt9pj.png', 'Cloths', 0),
+(3, 2, 1, 'productcategories/cfyde.png', 'Cloths', 1);
 
 -- --------------------------------------------------------
 
@@ -392,7 +411,8 @@ CREATE TABLE `cities` (
 --
 
 INSERT INTO `cities` (`id`, `name`, `stateid`) VALUES
-(1, 'Kolhapur', NULL);
+(1, 'Kolhapur', 1),
+(2, 'Kolhapur', 1);
 
 -- --------------------------------------------------------
 
@@ -455,7 +475,13 @@ CREATE TABLE `igap_vendorproductpictures` (
 INSERT INTO `igap_vendorproductpictures` (`id`, `productid`, `title`, `picpath`, `srno`) VALUES
 (3, 2, 'demo', 'businessproductpicture/vec1r.png', 1),
 (4, 2, 'demo', 'businessproductpicture/6wstv.png', 1),
-(5, 1, 'picture', 'vendorproducts/8gxj5.png', 1);
+(5, 1, 'picture', 'vendorproducts/8gxj5.png', 1),
+(7, 0, 'asdasda', 'vendorproducts/fgnsg.png', 4),
+(10, 4, 'sadas', 'vendorproducts/unsep.png', 2),
+(11, 4, 'asdasdsadas', 'vendorproducts/falsz.png', 1),
+(12, 6, 'Sample Picture', 'vendorproducts/yfsib.png', 2),
+(13, 6, 'sdasda', 'vendorproducts/7z8dm.png', 2),
+(14, 6, 'asdsdadasd', 'vendorproducts/tos2a.png', 2);
 
 -- --------------------------------------------------------
 
@@ -478,6 +504,19 @@ CREATE TABLE `igap_vendorproducts` (
   `instock` varchar(150) NOT NULL,
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `igap_vendorproducts`
+--
+
+INSERT INTO `igap_vendorproducts` (`id`, `name`, `title`, `description`, `specification`, `picpath`, `igapvendorid`, `igaproductcategoryid`, `mrp`, `price`, `weight`, `instock`, `status`) VALUES
+(1, 'Dress for girls', 'dress-for-girls', '<p><br>Maybe you check this if you can update to angular 7</p><p><a href=\"https://netbasal.com/getting-to-know-the-angular-cdk-drag-and-drop-feature-d79ba462ce31\">https://netbasal.com/getting-to-know-the-angular-cdk-drag-and-drop-feature-d79ba462ce31</a></p>', '', 'vendorproducts/gw01e.png', 1, 1, 1000, 500, 500, 'No', 'close'),
+(4, 'Dress', 'dress', '<p><br>Maybe you check this if you can update to angular 7</p><p><a href=\"https://netbasal.com/getting-to-know-the-angular-cdk-drag-and-drop-feature-d79ba462ce31\">https://netbasal.com/getting-to-know-the-angular-cdk-drag-and-drop-feature-d79ba462ce31</a></p>', '', 'vendorproducts/322aa.png', 1, 1, 1000, 500, 500, 'No', 'close'),
+(5, 'Dress of choice red color', 'Dress+of%20choice%20red%20color', '<p>dress</p>', '', 'vendorproducts/sjwea.png', 1, 1, 1000, 500, 500, 'Yes', 'close'),
+(6, 'Dress of choice red color', 'Dress of choice red color', '<p>dress</p>', '', 'vendorproducts/d4bvf.png', 1, 1, 1000, 500, 500, 'Yes', 'open'),
+(7, 'Dress of choice red color', 'Dress of choice red color', '<p>dress</p>', '', 'vendorproducts/ti3ru.png', 1, 1, 1000, 500, 500, 'Yes', 'open'),
+(8, 'Dress of choice red color', 'Dress-of-choice-red-color', '<p>dress</p>', '', 'vendorproducts/8t2ap.png', 1, 1, 1000, 500, 500, 'Yes', 'open'),
+(9, 'Dress of choice red color', 'dress-of-choice-red-color', '<p>dress</p>', '', 'vendorproducts/h0riz.png', 1, 1, 1000, 500, 500, 'Yes', 'open');
 
 -- --------------------------------------------------------
 
@@ -502,7 +541,8 @@ CREATE TABLE `igap_vendorproductvarieties` (
 --
 
 INSERT INTO `igap_vendorproductvarieties` (`id`, `productid`, `color`, `size`, `weight`, `mrp`, `price`, `instock`, `status`) VALUES
-(1, 1, 'red', 'XL', 100, 500, 400, 'N', 'open');
+(1, 1, 'red', 'XL', 100, 500, 400, 'N', 'open'),
+(2, 1, '#d62424', 'XL', 500, 100, 100, 'Yes', 'open');
 
 -- --------------------------------------------------------
 
@@ -538,8 +578,8 @@ INSERT INTO `igap_vendors` (`id`, `name`, `email`, `password`, `mobileno`, `addr
 CREATE TABLE `pincodes` (
   `id` int(11) NOT NULL,
   `pincode` varchar(100) NOT NULL,
-  `district` varchar(100) NOT NULL,
-  `state` varchar(100) NOT NULL
+  `stateid` int(11) NOT NULL,
+  `districtid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -861,7 +901,10 @@ ALTER TABLE `igap_vendors`
 -- Indexes for table `pincodes`
 --
 ALTER TABLE `pincodes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pincode` (`pincode`),
+  ADD KEY `fk_stateid` (`stateid`),
+  ADD KEY `fk_districtid` (`districtid`);
 
 --
 -- Indexes for table `states`
@@ -931,7 +974,7 @@ ALTER TABLE `business_affiliates`
 -- AUTO_INCREMENT for table `business_banners`
 --
 ALTER TABLE `business_banners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `business_blogcategories`
@@ -973,7 +1016,7 @@ ALTER TABLE `business_deals`
 -- AUTO_INCREMENT for table `business_productcategories`
 --
 ALTER TABLE `business_productcategories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `business_productpictures`
@@ -1009,7 +1052,7 @@ ALTER TABLE `business_subscriptions`
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -1027,19 +1070,19 @@ ALTER TABLE `igap_productcategories`
 -- AUTO_INCREMENT for table `igap_vendorproductpictures`
 --
 ALTER TABLE `igap_vendorproductpictures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `igap_vendorproducts`
 --
 ALTER TABLE `igap_vendorproducts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `igap_vendorproductvarieties`
 --
 ALTER TABLE `igap_vendorproductvarieties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `igap_vendors`
@@ -1098,6 +1141,13 @@ ALTER TABLE `user_orders`
 --
 ALTER TABLE `cities`
   ADD CONSTRAINT `fK_city_id` FOREIGN KEY (`stateid`) REFERENCES `states` (`id`);
+
+--
+-- Constraints for table `pincodes`
+--
+ALTER TABLE `pincodes`
+  ADD CONSTRAINT `fk_districtid` FOREIGN KEY (`districtid`) REFERENCES `districts` (`id`),
+  ADD CONSTRAINT `fk_stateid` FOREIGN KEY (`stateid`) REFERENCES `states` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -123,7 +123,7 @@ app.use("/user" , require("./routes/user/user"));
 app.use("/user/address" , require("./routes/user/useraddress"));
 app.use("/user/order" , require("./routes/user/order"));
 
-app.listen(8081, function() {
+app.listen(process.env.PORT || 3000, function() {
     console.log("website is  started");
 });
 

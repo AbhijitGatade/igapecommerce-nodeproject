@@ -3,10 +3,10 @@ var mysql = require("mysql");
 class Database {
     constructor() {
         this.con = mysql.createConnection({
-            host: "https://www.db4free.net/",
-            user: "igapecommerce",
-            password: "3ec92bfb",
-            database: "igapecommerce"
+            host: "mysql5046.site4now.net",
+            user: "a66bc3_igecomm",
+            password: "admin123",
+            database: "db_a66bc3_igecomm"
         });
     }
 

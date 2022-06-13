@@ -33,7 +33,7 @@ router.post("/save", async (req, res) => {
 router.post("/list", async (req, res) => {
   let body = req.body;
   let pincode = new Pincode.Pincode();
-
+  pincode.districtid = body.data.districtid;
   pincode.list().then(
     (result) => {
       let data = {

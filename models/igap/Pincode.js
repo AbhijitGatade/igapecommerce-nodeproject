@@ -42,6 +42,8 @@ class Pincode {
         this.query = "SELECT P.*, S.name AS statename, D.name AS districtname ";
         this.query += "FROM pincodes AS P, states AS S, districts AS D ";
         this.query += "WHERE P.stateid = S.id AND P.districtid = D.id ";
+        if(this.districtid != 0)
+            this.query += "AND D.id = " + this.districtid + " ";
         this.query += "ORDER BY pincode";
         console.log(this.query);
         return new Promise((resolve, reject) => {

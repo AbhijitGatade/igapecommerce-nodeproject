@@ -1,7 +1,8 @@
 let Database = require("../Database");
-var fs = require("fs")
+var fs = require("fs");
 
 class BusinessProductPicture {
+
     id = 0;
     productid = 0;
     title = "";
@@ -19,6 +20,7 @@ class BusinessProductPicture {
         this.imagecode = "";
         this.srno = 0;
     }
+
     save=()=>{
         if (this.imagecode != "") {
             let base64image = this.imagecode.replace(/^data:image\/jpeg;base64,/, "");
@@ -29,16 +31,16 @@ class BusinessProductPicture {
             });
         }
         if(this.id==0){
-            this.query = "INSERT INTO business_productpictures(title, productid, picpath, srno) ";
-           this.query+= "VALUES('"+ this.title +"', "+ this.productid +", '" + this.picpath + "', "+ this.srno +")"; 
+            this.query = "INSERT INTO business_productpictures(id, title, productid, picpath, srno )  ";
+           this.query+= "VALUES ("+ this.id +",'"+ this.title +"','"+ this.productid +"','"+ this.picpath+"','"+ this.srno +"')"; 
         }
         else {
-            this.query = "UPDATE business_productpictures SET title = '" + this.title + "', ";
-            this.query += "productid = " + this.productid + "', ";
+            this.query = "UPDATE business_productpictures SET title = '"+ this.title+"', ";
+            this.query += "productid = " + this.productid + ", ";
             if(this.picpath != "")
-                this.query += "picpath = '"+this.picpath+"', ";
+                this.query += "picpath = '"+this.picpath + "', ";
             this.query += "srno = " + this.srno + " ";
-            this.query += "WHERE id=" + this.id;
+            this.query += "WHERE id = " + this.id;
         }
         return new Promise((resolve, reject)=>{
             this.db.query(this.query, (err, result)=>{
@@ -92,6 +94,18 @@ class BusinessProductPicture {
               });
             });
         });
+    };
+
+    changesrno=()=>{
+        this.query = "UPDATE business_productpictures SET srno = " + this.srno + " WHERE id = " + this.id;
+        return new Promise((resolve, reject)=>{
+            this.db.query(this.query, (err, result)=>{
+                this.db.close();
+                if(err)
+                    return reject(err);                
+                resolve(result);
+            });
+        });    
     };
 }
 module.exports={

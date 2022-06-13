@@ -1,5 +1,5 @@
 var express = require("express");
-var BusinessProductVariety = require("../../models/business/BusinessProductVariety");
+var BusinessProductVariety = require("../../models/business/BusinessProductVariety")
 const router = express.Router();
 
 router.post("/save", async (req, res) => {
@@ -7,13 +7,38 @@ router.post("/save", async (req, res) => {
   let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
   businessproductvariety.id = body.data.id;
   businessproductvariety.productid = body.data.productid;
-  businessproductvariety.size = body.data.size;
   businessproductvariety.color = body.data.color;
+  businessproductvariety.size = body.data.size;
   businessproductvariety.weight = body.data.weight;
-  businessproductvariety.mrp  = body.data.mrp ;
-  businessproductvariety.price  = body.data.price ;
+  businessproductvariety.mrp = body.data.mrp;
+  businessproductvariety.price = body.data.price;
   businessproductvariety.instock = body.data.instock;
   businessproductvariety.save().then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
+router.post("/get", async (req, res) => {
+  let body = req.body;
+  let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
+  businessproductvariety.id = body.data.id;
+  businessproductvariety.get().then(
     (result) => {
       let data = {
         data: {
@@ -84,82 +109,45 @@ router.post("/delete", async (req, res) => {
   );
 });
 
-router.post("/get", async (req, res) => {
-  let body = req.body;
-  let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
-  businessproductvariety.id = body.data.id;
-  businessproductvariety.get().then(
-    (result) => {
-      let data = {
-        data: {
-          status: "success",
-          data: result,
-        },
-      };
-      res.end(JSON.stringify(data));
-    },
-    (err) => {
-      let data = {
-        data: {
-          status: "fail",
-        },
-      };
-      res.end(JSON.stringify(data));
-    }
-  );
-});
-
 router.post("/changestatus", async (req, res) => {
   let body = req.body;
   let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
   businessproductvariety.id = body.data.id;
-  businessproductvariety.status = body.data.status;
-  businessproductvariety.changestatus().then(
-    (result) => {
+  businessproductvariety.status = body.data.status;  
+  businessproductvariety.changestock().then(result => {
       let data = {
-        data: {
-          status: "success",
-          data: result,
-        },
-      };
+          "status": "success",
+          "data": result
+      }
       res.end(JSON.stringify(data));
-    },
-    (err) => {
-      let data = {
-        data: {
-          status: "fail",
-        },
-      };
-      res.end(JSON.stringify(data));
-    }
-  );
+  },
+      err => {
+          let data = {
+              "status": "failed"
+          }
+          res.end(JSON.stringify(data));
+          console.log(err)
+      });
 });
-
 
 router.post("/changestock", async (req, res) => {
   let body = req.body;
   let businessproductvariety = new BusinessProductVariety.BusinessProductVariety();
   businessproductvariety.id = body.data.id;
-  businessproductvariety.instock = body.data.instock;
-  businessproductvariety.changestock().then(
-    (result) => {
+  businessproductvariety.instock = body.data.instock;  
+  businessproductvariety.changestock().then(result => {
       let data = {
-        data: {
-          status: "success",
-          data: result,
-        },
-      };
+          "status": "success",
+          "data": result
+      }
       res.end(JSON.stringify(data));
     },
-    (err) => {
-      let data = {
-        data: {
-          status: "fail",
-        },
-      };
-      res.end(JSON.stringify(data));
-    }
-  );
+      err => {
+          let data = {
+              "status": "failed"
+          }
+          res.end(JSON.stringify(data));
+          console.log(err)
+    });
 });
-
 module.exports = router;

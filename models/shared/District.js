@@ -47,7 +47,8 @@ class District {
     }
 
     list=()=>{
-        this.query = "SELECT D.*, S.name AS statename FROM districts AS D, states AS S WHERE D.stateid = S.id ";
+        this.query = "SELECT D.*, (SELECT COUNT(*) FROM pincodes AS P WHERE P.districtid = D.id) AS pincodecount, ";
+        this.query += "S.name AS statename FROM districts AS D, states AS S WHERE D.stateid = S.id ";
         if(this.stateid != 0)
             this.query += "AND D.stateid = " + this.stateid + " ";
         this.query += "ORDER BY D.name";

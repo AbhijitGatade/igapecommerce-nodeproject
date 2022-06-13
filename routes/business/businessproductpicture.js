@@ -33,10 +33,9 @@ router.post("/save", async (req, res) => {
 });
 
 router.post("/list", async (req, res) => {
-  let body = req.body;  
+  let body = req.body;
   let businessproductpicture = new BusinessProductPicture.BusinessProductPicture();
   businessproductpicture.productid = body.data.productid;
-
   businessproductpicture.list().then(
     (result) => {
       let data = {
@@ -63,6 +62,32 @@ router.post("/delete", async (req, res) => {
   let businessproductpicture = new BusinessProductPicture.BusinessProductPicture();
   businessproductpicture.id = body.data.id;
   businessproductpicture.delete().then(
+    (result) => {
+      let data = {
+        data: {
+          status: "success",
+          data: result,
+        },
+      };
+      res.end(JSON.stringify(data));
+    },
+    (err) => {
+      let data = {
+        data: {
+          status: "fail",
+        },
+      };
+      res.end(JSON.stringify(data));
+    }
+  );
+});
+
+router.post("/changesrno", async (req, res) => {
+  let body = req.body;
+  let businessproductpicture = new BusinessProductPicture.BusinessProductPicture();
+  businessproductpicture.id = body.data.id;
+  businessproductpicture.srno = body.data.srno;
+  businessproductpicture.changesrno().then(
     (result) => {
       let data = {
         data: {

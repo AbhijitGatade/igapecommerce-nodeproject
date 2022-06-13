@@ -88,6 +88,7 @@ app.use("/shared/state", require("./routes/shared/state"));
 app.use("/shared/district", require("./routes/shared/district"));
 app.use("/shared/taluka", require("./routes/shared/taluka"));
 app.use("/shared/city", require("./routes/shared/city"));
+app.use("/shared/pincode", require("./routes/igap/pincode"));
 // Shared APIs routing for End
 
 // IGAP APIs routing for Beginning

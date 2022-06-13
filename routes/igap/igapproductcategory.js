@@ -33,7 +33,6 @@ router.post("/save", async (req, res) => {
 router.post("/list", async (req, res) => {
   let body = req.body;
   let igapproductcategory = new IGAPProductCategory.IGAPProductCategory();
-
   igapproductcategory.list().then(
     (result) => {
       let data = {

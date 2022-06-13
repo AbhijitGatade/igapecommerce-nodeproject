@@ -3,7 +3,7 @@ var mysql = require("mysql");
 class Database {
     constructor() {
         this.con = mysql.createConnection({
-            host: "localhost",
+            host: "https://www.db4free.net/",
             user: "igapecommerce",
             password: "3ec92bfb",
             database: "igapecommerce"
